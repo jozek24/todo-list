@@ -7,6 +7,8 @@ import{Task} from './task'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  taskName='';
+  taskDate='';
   config:{[key: string]: string} = null;
   tasks: Task[]=[
     {
@@ -28,7 +30,7 @@ export class AppComponent {
 
 constructor() {
   setTimeout(()=>{
-    this.config={  
+    this.config={
       title: 'Lista Zadań',
       footer: '© Lista zadań, All rights reserved.',
       date: new Date().toDateString()
@@ -40,8 +42,15 @@ constructor() {
     this.tasks=[];
   }
 
-  onKeyUp(event: KeyboardEvent){
-    const target = event.target as HTMLInputElement;
-    console.log(target.value);
+  createTask(){
+    const task: Task={
+    name:this.taskName,
+    deadline:this.taskDate,
+    done:false
+    };
+
+    this.tasks.push(task);
+    this.taskName='';
+    this.taskDate='';
   }
 }

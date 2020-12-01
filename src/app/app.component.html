@@ -15,12 +15,18 @@
       class="col s8"
       type="text"
       placeholder="Dodaj zadanie i datę wykonania"
-      (keyup)="onKeyUp($event)"
+      [(ngModel)]="taskName"
     />
-    <input class="col s2 disabled" type="date" />
-    <button class="btn-floating">+</button>
+    <input class="col s2 disabled" type="date" [(ngModel)]="taskDate" />
+    <button
+      class="btn-floating"
+      (click)="createTask()"
+      [disabled]="taskName === '' || taskDate === ''"
+    >
+      +
+    </button>
   </div>
-  <ul class="collection">
+  <ul class="collection" *ngIf="tasks.length > 0; else noTasks">
     <li class="collection-item row" *ngFor="let task of tasks; let i = index">
       <span class="col s10"
         >{{ i + 1 }}. {{ task.name }} -
@@ -39,10 +45,17 @@
       <span class="col done">Sprzątanie kuwet</span>
     </li>
   </ul>
+  <ng-template #noTasks>
+    <h1>Dzisiaj brak zadań :-)</h1>
+  </ng-template>
 
-  <h1>Dzisiaj brak zadań :-)</h1>
-
-  <button class="btn red" (click)="clearTasks()">Wyczyść</button>
+  <button
+    class="btn red"
+    (click)="clearTasks()"
+    [disabled]="tasks.length === 0"
+  >
+    Wyczyść
+  </button>
 
   <footer class="page-footer mt-5">
     <div class="footer-copyright">
